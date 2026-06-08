@@ -1,0 +1,9 @@
+{
+  "id": "obmenu",
+  "name": "obMenu",
+  "version": "0.1.0",
+  "minAppVersion": "1.5.0",
+  "description": "A modern Markdown formatting toolbar for Obsidian.",
+  "author": "Michael Makarov",
+  "isDesktopOnly": false
+}
