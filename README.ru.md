@@ -2,7 +2,7 @@
 
 Небольшая панель форматирования для тех, кто живет в Markdown.
 
-[English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md)
+[English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md)
 
 obMenu - clean-room плагин с Markdown-панелью инструментов, вдохновленный идеей cMenu. Он держит часто используемые действия рядом с редактором: заголовки, чекбоксы, callout-блоки, ссылки, подсветку, код, списки, жирный, курсив и несколько спокойных помощников.
 

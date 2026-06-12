@@ -2,7 +2,7 @@
 
 A small formatting bar for people who live in Markdown.
 
-[English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md)
+[English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md)
 
 obMenu is a clean-room Obsidian Markdown toolbar inspired by cMenu. It puts the stuff you reach for all the time right next to the editor: headings, checkboxes, callouts, links, highlights, code, lists, bold, italic, and a few quiet helpers.
 
