@@ -1,11 +1,11 @@
 import { ButtonComponent, setIcon, type App, type Command } from "obsidian";
 import { getBuiltInCommand } from "../commands/registry";
-import type { ObMenuSettings, ToolbarItem, ToolbarPosition } from "../types";
+import type { MdMenuSettings, ToolbarItem, ToolbarPosition } from "../types";
 import { clampPosition } from "./positioning";
 
 export interface ToolbarControllerOptions {
   app: App;
-  settings: ObMenuSettings;
+  settings: MdMenuSettings;
   onRunItem: (item: ToolbarItem, event: MouseEvent) => void;
   onManualMove: (position: ToolbarPosition) => void;
 }
@@ -31,7 +31,7 @@ export class ToolbarController {
   mount(parent: HTMLElement): void {
     if (this.root) return;
 
-    this.root = createDiv({ cls: "obmenu-toolbar" });
+    this.root = createDiv({ cls: "mdmenu-toolbar" });
     parent.appendChild(this.root);
     this.render();
   }
@@ -63,7 +63,7 @@ export class ToolbarController {
     for (const item of this.options.settings.toolbarItems) {
       if (item.type === "separator") {
         this.root.createDiv({
-          cls: "obmenu-separator",
+          cls: "mdmenu-separator",
           attr: { role: "separator" },
         });
         continue;
@@ -84,7 +84,7 @@ export class ToolbarController {
       const tooltip = disabled ? `Missing command: ${commandId}` : label;
 
       const button = new ButtonComponent(this.root);
-      button.setClass("obmenu-button");
+      button.setClass("mdmenu-button");
       button.setTooltip(tooltip);
       button.setDisabled(disabled);
       button.buttonEl.setAttribute("aria-label", tooltip);
@@ -101,7 +101,7 @@ export class ToolbarController {
     if (!this.root) return;
 
     const handle = this.root.createEl("button", {
-      cls: "obmenu-drag-handle",
+      cls: "mdmenu-drag-handle",
       attr: {
         "aria-label": "Drag toolbar",
         type: "button",
@@ -121,18 +121,16 @@ export class ToolbarController {
     if (!this.root) return;
 
     this.root.addClass("is-positioned");
-    this.root.style.bottom = "auto";
-    this.root.style.left = `${left}px`;
-    this.root.style.top = `${top}px`;
+    this.root.setCssProps({
+      "--mdmenu-left": `${left}px`,
+      "--mdmenu-top": `${top}px`,
+    });
   }
 
   clearPosition(): void {
     if (!this.root) return;
 
     this.root.removeClass("is-positioned");
-    this.root.style.left = "";
-    this.root.style.top = "";
-    this.root.style.bottom = "";
   }
 
   getSize(): { width: number; height: number } | null {
@@ -172,7 +170,7 @@ export class ToolbarController {
           top: startRect.top + moveEvent.clientY - startPointer.top,
         },
         toolbarSize,
-        { width: window.innerWidth, height: window.innerHeight },
+        { width: activeWindow.innerWidth, height: activeWindow.innerHeight },
       );
 
       this.setPosition(latestPosition.left, latestPosition.top);
@@ -185,14 +183,14 @@ export class ToolbarController {
       this.options.onManualMove(latestPosition);
     };
 
-    document.addEventListener("pointermove", onPointerMove);
-    document.addEventListener("pointerup", stopDrag, { once: true });
-    document.addEventListener("pointercancel", stopDrag, { once: true });
+    activeDocument.addEventListener("pointermove", onPointerMove);
+    activeDocument.addEventListener("pointerup", stopDrag, { once: true });
+    activeDocument.addEventListener("pointercancel", stopDrag, { once: true });
 
     this.dragCleanup = () => {
-      document.removeEventListener("pointermove", onPointerMove);
-      document.removeEventListener("pointerup", stopDrag);
-      document.removeEventListener("pointercancel", stopDrag);
+      activeDocument.removeEventListener("pointermove", onPointerMove);
+      activeDocument.removeEventListener("pointerup", stopDrag);
+      activeDocument.removeEventListener("pointercancel", stopDrag);
     };
   }
 }

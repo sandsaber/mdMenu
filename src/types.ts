@@ -14,7 +14,7 @@ export interface ToolbarItem {
   commandId?: string;
 }
 
-export interface ObMenuSettings {
+export interface MdMenuSettings {
   enabled: boolean;
   positionMode: ToolbarPositionMode;
   visualStyle: ToolbarVisualStyle;

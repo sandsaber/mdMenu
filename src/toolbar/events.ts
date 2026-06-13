@@ -3,6 +3,7 @@ import type { EventRef, Workspace } from "obsidian";
 export class ToolbarEvents {
   private refs: EventRef[] = [];
   private selectionHandler: (() => void) | null = null;
+  private selectionDocument: Document | null = null;
 
   constructor(
     private readonly workspace: Workspace,
@@ -13,7 +14,8 @@ export class ToolbarEvents {
     this.refs.push(this.workspace.on("active-leaf-change", this.refresh));
     this.refs.push(this.workspace.on("layout-change", this.refresh));
     this.selectionHandler = () => this.refresh();
-    document.addEventListener("selectionchange", this.selectionHandler);
+    this.selectionDocument = activeDocument;
+    this.selectionDocument.addEventListener("selectionchange", this.selectionHandler);
   }
 
   unregister(): void {
@@ -23,10 +25,14 @@ export class ToolbarEvents {
 
     this.refs = [];
 
-    if (this.selectionHandler) {
-      document.removeEventListener("selectionchange", this.selectionHandler);
+    if (this.selectionHandler && this.selectionDocument) {
+      this.selectionDocument.removeEventListener(
+        "selectionchange",
+        this.selectionHandler,
+      );
     }
 
     this.selectionHandler = null;
+    this.selectionDocument = null;
   }
 }

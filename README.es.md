@@ -1,16 +1,16 @@
-# obMenu
+# mdMenu
 
 Una pequeña capa de formato Markdown estilo WYSIWYG para usuarios de Obsidian.
 
 [English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md)
 
-obMenu es un plugin clean-room con una barra de herramientas Markdown inspirada en la idea de cMenu. Añade al editor una mini capa estilo WYSIWYG para el formato común, pero mantiene tus notas como Markdown plano por debajo. Encabezados, casillas, callouts, enlaces, resaltado, código, listas, negrita, cursiva y algunas ayudas discretas quedan junto al texto que estás escribiendo.
+mdMenu es un plugin clean-room con una barra de herramientas Markdown inspirada en la idea de cMenu. Añade al editor una mini capa estilo WYSIWYG para el formato común, pero mantiene tus notas como Markdown plano por debajo. Encabezados, casillas, callouts, enlaces, resaltado, código, listas, negrita, cursiva y algunas ayudas discretas quedan junto al texto que estás escribiendo.
 
 Puedes fijarla abajo, mostrarla cerca de la selección o arrastrarla a una posición cómoda. Sigues escribiendo Markdown, solo con menos viajes a la command palette, menos atajos memorizados y un poco más de manipulación directa.
 
 > Estado: listo para releases de GitHub. Envío al catálogo de community plugins: en progreso.
 
-![Captura de la barra obMenu](assets/readme/Screenshot%202026-06-12%20at%2015.28.52.png)
+![Captura de la barra mdMenu](assets/readme/Screenshot%202026-06-12%20at%2015.28.52.png)
 
 ## Qué funciona ahora
 
@@ -43,7 +43,7 @@ La barra predeterminada muestra H1, H2, H3 y H4 como botones separados. H5, H6 y
 
 ### Posición de la barra
 
-obMenu tiene cuatro modos de posición:
+mdMenu tiene cuatro modos de posición:
 
 - `fixed`: mantener la barra en la parte inferior del workspace.
 - `selection`: mostrarla cerca del texto seleccionado.
@@ -81,7 +81,7 @@ Después de elegir un preset, puedes seguir añadiendo, quitando y reordenando b
 - `default`: densidad normal de una barra de Obsidian.
 - `compact`: botones más pequeños cuando la nota necesita más espacio.
 
-Ambos estilos usan theme variables de Obsidian, así que obMenu sigue los temas claros y oscuros sin añadir su propio sistema de color.
+Ambos estilos usan theme variables de Obsidian, así que mdMenu sigue los temas claros y oscuros sin añadir su propio sistema de color.
 
 ### Detalles de edición
 
@@ -94,7 +94,7 @@ Ambos estilos usan theme variables de Obsidian, así que obMenu sigue los temas 
 
 ### Seguridad de ajustes
 
-Los ajustes guardados se normalizan al cargar. Si aparecen datos antiguos o malformados, obMenu vuelve a los valores predeterminados en vez de romper la barra.
+Los ajustes guardados se normalizan al cargar. Si aparecen datos antiguos o malformados, mdMenu vuelve a los valores predeterminados en vez de romper la barra.
 
 ### Soporte de release
 
@@ -128,10 +128,10 @@ styles.css
 Colócalos aquí en tu vault:
 
 ```text
-.obsidian/plugins/obmenu
+.obsidian/plugins/mdmenu
 ```
 
-Después activa `obMenu` desde los ajustes de community plugins.
+Después activa `mdMenu` desde los ajustes de community plugins.
 
 ## Build local
 
@@ -144,16 +144,16 @@ npm run build:dist
 Copia esta carpeta:
 
 ```text
-dist/obmenu
+dist/mdmenu
 ```
 
 a tu vault:
 
 ```text
-.obsidian/plugins/obmenu
+.obsidian/plugins/mdmenu
 ```
 
-Después activa `obMenu` desde los ajustes de community plugins.
+Después activa `mdMenu` desde los ajustes de community plugins.
 
 ## Desarrollo
 
@@ -201,11 +201,11 @@ npm run check
 
 ## Privacidad
 
-obMenu se ejecuta localmente dentro de Obsidian. No envía notas, selecciones, ajustes ni telemetría.
+mdMenu se ejecuta localmente dentro de Obsidian. No envía notas, selecciones, ajustes ni telemetría.
 
 ## Inspiración
 
-obMenu está inspirado en cMenu, un plugin anterior de barra de formato para Obsidian. Este proyecto no copia archivos fuente de cMenu.
+mdMenu está inspirado en cMenu, un plugin anterior de barra de formato para Obsidian. Este proyecto no copia archivos fuente de cMenu.
 
 ## Licencia
 

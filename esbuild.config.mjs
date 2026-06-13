@@ -1,11 +1,15 @@
 import esbuild from "esbuild";
-import builtins from "builtin-modules";
+import { builtinModules } from "node:module";
 
 const prod = process.argv[2] === "production";
+const nodeBuiltins = [
+  ...builtinModules,
+  ...builtinModules.map((moduleName) => `node:${moduleName}`),
+];
 
 const context = await esbuild.context({
   banner: {
-    js: "/* obMenu - a clean-room Obsidian Markdown toolbar */",
+    js: "/* mdMenu - a clean-room Obsidian Markdown toolbar */",
   },
   entryPoints: ["src/main.ts"],
   bundle: true,
@@ -23,7 +27,7 @@ const context = await esbuild.context({
     "@lezer/common",
     "@lezer/highlight",
     "@lezer/lr",
-    ...builtins,
+    ...nodeBuiltins,
   ],
   format: "cjs",
   target: "es2018",

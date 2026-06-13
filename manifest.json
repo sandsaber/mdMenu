@@ -1,6 +1,6 @@
 {
-  "id": "obmenu",
-  "name": "obMenu",
+  "id": "mdmenu",
+  "name": "mdMenu",
   "version": "1.0.0",
   "minAppVersion": "1.5.0",
   "description": "A mini WYSIWYG-style Markdown formatting toolbar.",

@@ -1,5 +1,5 @@
 {
-  "name": "obmenu",
+  "name": "mdmenu",
   "version": "1.0.0",
   "description": "A mini WYSIWYG-style Markdown formatting toolbar for Obsidian.",
   "main": "main.js",
@@ -25,11 +25,10 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sandsaber/obMenu.git"
+    "url": "https://github.com/sandsaber/mdMenu.git"
   },
   "devDependencies": {
     "@types/node": "^25.9.3",
-    "builtin-modules": "^5.2.0",
     "esbuild": "^0.28.1",
     "eslint": "^10.5.0",
     "obsidian": "^1.13.1",

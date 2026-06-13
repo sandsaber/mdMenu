@@ -1,5 +1,5 @@
 import type {
-  ObMenuSettings,
+  MdMenuSettings,
   ToolbarItem,
   ToolbarPosition,
   ToolbarPositionMode,
@@ -112,7 +112,7 @@ export const TOOLBAR_PRESETS: ToolbarPreset[] = [
   },
 ];
 
-export const DEFAULT_SETTINGS: ObMenuSettings = {
+export const DEFAULT_SETTINGS: MdMenuSettings = {
   enabled: true,
   positionMode: "fixed",
   visualStyle: "default",
@@ -142,12 +142,12 @@ function isToolbarItem(value: unknown): value is ToolbarItem {
   );
 }
 
-export function normalizeSettings(saved: unknown): ObMenuSettings {
+export function normalizeSettings(saved: unknown): MdMenuSettings {
   if (!saved || typeof saved !== "object") {
     return structuredClone(DEFAULT_SETTINGS);
   }
 
-  const input = saved as Partial<ObMenuSettings>;
+  const input = saved as Partial<MdMenuSettings>;
   const toolbarItems = Array.isArray(input.toolbarItems)
     ? input.toolbarItems.filter(isToolbarItem)
     : [];

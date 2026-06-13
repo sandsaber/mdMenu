@@ -1,10 +1,10 @@
 # AGENTS.md
 
-This file is the canonical project guide for coding agents working on obMenu.
+This file is the canonical project guide for coding agents working on mdMenu.
 
 ## Project
 
-obMenu is a clean-room Obsidian plugin that provides a compact, mini WYSIWYG-style Markdown formatting toolbar while keeping notes as plain Markdown.
+mdMenu is a clean-room Obsidian plugin that provides a compact, mini WYSIWYG-style Markdown formatting toolbar while keeping notes as plain Markdown.
 
 The implementation is inspired by cMenu as a product idea, but it must not copy cMenu source files.
 
@@ -63,10 +63,10 @@ npm run check
 `npm run build:dist` creates:
 
 ```text
-dist/obmenu/main.js
-dist/obmenu/manifest.json
-dist/obmenu/styles.css
-dist/obmenu/LICENSE
+dist/mdmenu/main.js
+dist/mdmenu/manifest.json
+dist/mdmenu/styles.css
+dist/mdmenu/LICENSE
 ```
 
 `dist/` is ignored by Git. Rebuild it whenever a fresh copyable plugin folder is needed.
@@ -75,13 +75,14 @@ dist/obmenu/LICENSE
 
 - `.github/workflows/release.yml` follows the Grimoire-style tag release flow.
 - Release tags use `x.y.z` without a `v` prefix.
-- The workflow must verify that the tag matches `package.json` and `dist/obmenu/manifest.json`.
-- Release assets are `dist/obmenu/main.js`, `dist/obmenu/manifest.json`, and `dist/obmenu/styles.css`.
+- The workflow must verify that the tag matches `package.json` and `dist/mdmenu/manifest.json`.
+- Release assets are `dist/mdmenu/main.js`, `dist/mdmenu/manifest.json`, and `dist/mdmenu/styles.css`.
 - Keep `actions/attest` enabled for release assets.
 
 ## Community Plugin Review
 
 - `manifest.json` description must not include the word "Obsidian"; the plugin directory context already implies it.
+- Preferred Lucide icon for plugin listing or community metadata: `file-pen-line`.
 - GitHub release assets should include artifact attestations for `main.js`, `manifest.json`, and `styles.css` so users can verify provenance from the source repository.
 
 ## Architecture

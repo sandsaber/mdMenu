@@ -13,8 +13,8 @@ import {
   applyInlineCommand,
 } from "./commands/markdownCommands";
 import { normalizeSettings } from "./settings";
-import { ObMenuSettingTab } from "./settingsTab";
-import type { ObMenuSettings, ToolbarItem } from "./types";
+import { MdMenuSettingTab } from "./settingsTab";
+import type { MdMenuSettings, ToolbarItem } from "./types";
 import { ToolbarEvents } from "./toolbar/events";
 import { clampPosition, positionNearRect } from "./toolbar/positioning";
 import { ToolbarController } from "./toolbar/toolbar";
@@ -36,8 +36,8 @@ const OBSIDIAN_COMMAND_MAP: Record<string, string> = {
   wikilink: "editor:insert-wikilink",
 };
 
-export default class ObMenuPlugin extends Plugin {
-  settings!: ObMenuSettings;
+export default class MdMenuPlugin extends Plugin {
+  settings!: MdMenuSettings;
   private toolbar: ToolbarController | null = null;
   private events: ToolbarEvents | null = null;
   private unloaded = false;
@@ -47,7 +47,7 @@ export default class ObMenuPlugin extends Plugin {
     this.settings = normalizeSettings(await this.loadData());
     await this.saveSettings();
     this.registerBuiltInCommands();
-    this.addSettingTab(new ObMenuSettingTab(this.app, this));
+    this.addSettingTab(new MdMenuSettingTab(this.app, this));
 
     this.app.workspace.onLayoutReady(() => {
       if (this.unloaded) return;
@@ -61,7 +61,7 @@ export default class ObMenuPlugin extends Plugin {
           void this.saveSettings();
         },
       });
-      this.toolbar.mount(document.body);
+      this.toolbar.mount(activeDocument.body);
 
       this.events = new ToolbarEvents(this.app.workspace, () =>
         this.refreshToolbar(),
@@ -241,13 +241,13 @@ export default class ObMenuPlugin extends Plugin {
 
       const position = clampPosition(
         this.settings.manualPosition ?? {
-          left: (window.innerWidth - toolbarSize.width) / 2,
-          top: window.innerHeight - toolbarSize.height - 16,
+          left: (activeWindow.innerWidth - toolbarSize.width) / 2,
+          top: activeWindow.innerHeight - toolbarSize.height - 16,
         },
         toolbarSize,
         {
-          width: window.innerWidth,
-          height: window.innerHeight,
+          width: activeWindow.innerWidth,
+          height: activeWindow.innerHeight,
         },
       );
 
@@ -274,15 +274,15 @@ export default class ObMenuPlugin extends Plugin {
     }
 
     const position = positionNearRect(triggerRect, toolbarSize, {
-      width: window.innerWidth,
-      height: window.innerHeight,
+      width: activeWindow.innerWidth,
+      height: activeWindow.innerHeight,
     });
 
     this.toolbar.setPosition(position.left, position.top);
   }
 
   private getTriggerRect(): DOMRect | null {
-    const selection = window.getSelection();
+    const selection = activeWindow.getSelection();
     if (!selection || selection.rangeCount === 0) return null;
 
     const range = selection.getRangeAt(0);

@@ -1,7 +1,7 @@
 import { PluginSettingTab, Setting, type App } from "obsidian";
 import { BUILTIN_COMMANDS, getBuiltInCommand } from "./commands/registry";
 import { DEFAULT_TOOLBAR_ITEMS, TOOLBAR_PRESETS } from "./settings";
-import type ObMenuPlugin from "./main";
+import type MdMenuPlugin from "./main";
 import type {
   ToolbarItem,
   ToolbarPositionMode,
@@ -26,10 +26,10 @@ function describeToolbarItemType(item: ToolbarItem): string {
   return "Obsidian command";
 }
 
-export class ObMenuSettingTab extends PluginSettingTab {
+export class MdMenuSettingTab extends PluginSettingTab {
   private draggedToolbarIndex: number | null = null;
 
-  constructor(app: App, private readonly plugin: ObMenuPlugin) {
+  constructor(app: App, private readonly plugin: MdMenuPlugin) {
     super(app, plugin);
   }
 
@@ -38,7 +38,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
     containerEl.empty();
 
     new Setting(containerEl)
-      .setName("Enable obMenu")
+      .setName("Enable mdMenu")
       .setDesc("Show the Markdown formatting toolbar while editing.")
       .addToggle((toggle) => {
         toggle.setValue(this.plugin.settings.enabled);
@@ -116,7 +116,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
           }
           await this.plugin.saveSettings();
           this.plugin.refreshToolbar();
-          this.display();
+          this.update();
         });
       });
 
@@ -134,13 +134,13 @@ export class ObMenuSettingTab extends PluginSettingTab {
           ];
           await this.plugin.saveSettings();
           this.plugin.refreshToolbar();
-          this.display();
+          this.update();
         });
       });
 
     new Setting(containerEl)
       .setName("Reset toolbar")
-      .setDesc("Restore the default obMenu toolbar items.")
+      .setDesc("Restore the default mdMenu toolbar items.")
       .addButton((button) => {
         button.setIcon("undo-2").setTooltip("Reset toolbar").onClick(async () => {
           this.plugin.settings.toolbarItems = structuredClone(
@@ -148,7 +148,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
           );
           await this.plugin.saveSettings();
           this.plugin.refreshToolbar();
-          this.display();
+          this.update();
         });
       });
 
@@ -206,7 +206,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
             ];
             await this.plugin.saveSettings();
             this.plugin.refreshToolbar();
-            this.display();
+            this.update();
           });
       });
   }
@@ -216,7 +216,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
       const setting = new Setting(containerEl)
         .setName(describeToolbarItem(item))
         .setDesc(describeToolbarItemType(item))
-        .setClass("obmenu-toolbar-setting-row");
+        .setClass("mdmenu-toolbar-setting-row");
 
       setting.settingEl.draggable = true;
       setting.settingEl.addEventListener("dragstart", (event) => {
@@ -280,7 +280,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
               );
             await this.plugin.saveSettings();
             this.plugin.refreshToolbar();
-            this.display();
+            this.update();
           });
         });
     });
@@ -304,7 +304,7 @@ export class ObMenuSettingTab extends PluginSettingTab {
     this.plugin.settings.toolbarItems = items;
     await this.plugin.saveSettings();
     this.plugin.refreshToolbar();
-    this.display();
+    this.update();
   }
 
   private nextSeparatorId(): string {

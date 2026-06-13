@@ -1,16 +1,16 @@
-# obMenu
+# mdMenu
 
 A tiny WYSIWYG-style Markdown formatting layer for Obsidian users.
 
 [English](README.md) | [Русский](README.ru.md) | [Español](README.es.md) | [Deutsch](README.de.md) | [中文](README.zh.md) | [日本語](README.ja.md)
 
-obMenu is a clean-room Obsidian Markdown toolbar inspired by cMenu. It gives the editor a mini WYSIWYG-style layer for common formatting while keeping your notes as plain Markdown underneath. Headings, checkboxes, callouts, links, highlights, code, lists, bold, italic, and a few quiet helpers stay right next to the text you are writing.
+mdMenu is a clean-room Obsidian Markdown toolbar inspired by cMenu. It gives the editor a mini WYSIWYG-style layer for common formatting while keeping your notes as plain Markdown underneath. Headings, checkboxes, callouts, links, highlights, code, lists, bold, italic, and a few quiet helpers stay right next to the text you are writing.
 
 Keep it pinned at the bottom. Let it follow the selection. Drag it somewhere comfortable and leave it there. You still write Markdown, just with fewer command palette trips, fewer memorized shortcuts, and a little more direct manipulation.
 
 > Status: GitHub-release ready. Community plugin submission: in progress.
 
-![obMenu toolbar screenshot](assets/readme/Screenshot%202026-06-12%20at%2015.28.52.png)
+![mdMenu toolbar screenshot](assets/readme/Screenshot%202026-06-12%20at%2015.28.52.png)
 
 ## What works now
 
@@ -43,11 +43,11 @@ The default toolbar shows H1, H2, H3, and H4 as separate buttons. H5, H6, and th
 
 ### Toolbar placement
 
-obMenu has four placement modes:
+mdMenu has four placement modes:
 
 - `fixed`: keep the toolbar at the bottom of the workspace.
 - `selection`: show it near selected text.
-- `cursor`: place it near the current editor selection or caret when the browser gives obMenu a usable selection rectangle.
+- `cursor`: place it near the current editor selection or caret when the browser gives mdMenu a usable selection rectangle.
 - `manual`: drag it by the handle and keep the saved position.
 
 Selection, cursor, and manual placement stay inside the viewport, even in small windows.
@@ -81,7 +81,7 @@ After picking a preset, you can still add buttons, remove buttons, add separator
 - `default`: regular Obsidian toolbar density.
 - `compact`: smaller buttons when the note needs more room.
 
-Both styles use Obsidian theme variables, so obMenu follows light and dark themes without adding its own color system.
+Both styles use Obsidian theme variables, so mdMenu follows light and dark themes without adding its own color system.
 
 ### Editing details
 
@@ -94,7 +94,7 @@ Both styles use Obsidian theme variables, so obMenu follows light and dark theme
 
 ### Settings safety
 
-Saved settings are normalized on load. If old or malformed data shows up, obMenu falls back to defaults instead of breaking the toolbar.
+Saved settings are normalized on load. If old or malformed data shows up, mdMenu falls back to defaults instead of breaking the toolbar.
 
 ### Release support
 
@@ -128,10 +128,10 @@ styles.css
 Put them here in your vault:
 
 ```text
-.obsidian/plugins/obmenu
+.obsidian/plugins/mdmenu
 ```
 
-Then enable `obMenu` from Obsidian's community plugin settings.
+Then enable `mdMenu` from Obsidian's community plugin settings.
 
 ## Build locally
 
@@ -144,26 +144,26 @@ npm run build:dist
 Copy this folder:
 
 ```text
-dist/obmenu
+dist/mdmenu
 ```
 
 to your vault:
 
 ```text
-.obsidian/plugins/obmenu
+.obsidian/plugins/mdmenu
 ```
 
-Then enable `obMenu` from Obsidian's community plugin settings.
+Then enable `mdMenu` from Obsidian's community plugin settings.
 
 ## Release files
 
 `npm run build:dist` creates:
 
 ```text
-dist/obmenu/main.js
-dist/obmenu/manifest.json
-dist/obmenu/styles.css
-dist/obmenu/LICENSE
+dist/mdmenu/main.js
+dist/mdmenu/manifest.json
+dist/mdmenu/styles.css
+dist/mdmenu/LICENSE
 ```
 
 `dist/` is ignored by Git. Rebuild it when you need a fresh local package.
@@ -177,7 +177,7 @@ git tag 1.0.0
 git push origin 1.0.0
 ```
 
-The release workflow runs on tags matching `x.y.z`. It installs dependencies with `npm ci`, runs `npm audit --omit=dev`, lints, typechecks, runs tests, builds `dist/obmenu`, checks that the tag matches `package.json` and `manifest.json`, verifies release assets, creates GitHub artifact attestations, and publishes `main.js`, `manifest.json`, and `styles.css`.
+The release workflow runs on tags matching `x.y.z`. It installs dependencies with `npm ci`, runs `npm audit --omit=dev`, lints, typechecks, runs tests, builds `dist/mdmenu`, checks that the tag matches `package.json` and `manifest.json`, verifies release assets, creates GitHub artifact attestations, and publishes `main.js`, `manifest.json`, and `styles.css`.
 
 ## Development
 
@@ -247,11 +247,11 @@ Next up:
 
 ## Privacy
 
-obMenu runs locally inside Obsidian. It doesn't send notes, selections, settings, or telemetry anywhere.
+mdMenu runs locally inside Obsidian. It doesn't send notes, selections, settings, or telemetry anywhere.
 
 ## Inspiration
 
-obMenu is inspired by cMenu, an earlier Obsidian formatting toolbar plugin. This project doesn't copy cMenu source files.
+mdMenu is inspired by cMenu, an earlier Obsidian formatting toolbar plugin. This project doesn't copy cMenu source files.
 
 ## License
 

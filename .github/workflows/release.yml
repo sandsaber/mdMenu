@@ -61,7 +61,7 @@ jobs:
           const fs = require("fs");
           const tag = process.env.GITHUB_REF_NAME;
           const pkg = JSON.parse(fs.readFileSync("package.json", "utf8"));
-          const manifest = JSON.parse(fs.readFileSync("dist/obmenu/manifest.json", "utf8"));
+          const manifest = JSON.parse(fs.readFileSync("dist/mdmenu/manifest.json", "utf8"));
           if (pkg.version !== tag || manifest.version !== tag) {
             console.error("Release tag " + tag + " must match package.json (" + pkg.version + ") and manifest.json (" + manifest.version + ").");
             process.exit(1);
@@ -70,17 +70,17 @@ jobs:
 
       - name: Verify release assets
         run: |
-          test -s dist/obmenu/main.js
-          test -s dist/obmenu/manifest.json
-          test -s dist/obmenu/styles.css
+          test -s dist/mdmenu/main.js
+          test -s dist/mdmenu/manifest.json
+          test -s dist/mdmenu/styles.css
 
       - name: Attest release assets
         uses: actions/attest@v4
         with:
           subject-path: |
-            dist/obmenu/main.js
-            dist/obmenu/manifest.json
-            dist/obmenu/styles.css
+            dist/mdmenu/main.js
+            dist/mdmenu/manifest.json
+            dist/mdmenu/styles.css
 
       - name: Generate release notes
         run: |
@@ -96,7 +96,7 @@ jobs:
           )"
 
           {
-            echo "obMenu ${tag}"
+            echo "mdMenu ${tag}"
             echo
 
             if [ -n "${previous_tag}" ]; then
@@ -116,7 +116,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           tag="${GITHUB_REF_NAME}"
-          title="obMenu ${tag}"
+          title="mdMenu ${tag}"
 
           if gh release view "${tag}" >/dev/null 2>&1; then
             gh release edit "${tag}" \
@@ -124,15 +124,15 @@ jobs:
               --target "${GITHUB_SHA}" \
               --notes-file RELEASE_NOTES.md
             gh release upload "${tag}" \
-              dist/obmenu/main.js \
-              dist/obmenu/manifest.json \
-              dist/obmenu/styles.css \
+              dist/mdmenu/main.js \
+              dist/mdmenu/manifest.json \
+              dist/mdmenu/styles.css \
               --clobber
           else
             gh release create "${tag}" \
-              dist/obmenu/main.js \
-              dist/obmenu/manifest.json \
-              dist/obmenu/styles.css \
+              dist/mdmenu/main.js \
+              dist/mdmenu/manifest.json \
+              dist/mdmenu/styles.css \
               --title "${title}" \
               --target "${GITHUB_SHA}" \
               --notes-file RELEASE_NOTES.md \
