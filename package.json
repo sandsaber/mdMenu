@@ -1,6 +1,6 @@
 {
   "name": "obmenu",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "A mini WYSIWYG-style Markdown formatting toolbar for Obsidian.",
   "main": "main.js",
   "type": "module",

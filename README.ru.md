@@ -209,4 +209,4 @@ obMenu вдохновлен cMenu, более ранним плагином па
 
 ## License
 
-MIT License. Copyright (c) 2026 Michael Makarov.
+MIT. See [LICENSE](LICENSE).

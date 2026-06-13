@@ -173,8 +173,8 @@ dist/obmenu/LICENSE
 GitHub releases are created from semver tags without a `v` prefix:
 
 ```bash
-git tag 0.1.0
-git push origin 0.1.0
+git tag 1.0.0
+git push origin 1.0.0
 ```
 
 The release workflow runs on tags matching `x.y.z`. It installs dependencies with `npm ci`, runs `npm audit --omit=dev`, lints, typechecks, runs tests, builds `dist/obmenu`, checks that the tag matches `package.json` and `manifest.json`, verifies release assets, creates GitHub artifact attestations, and publishes `main.js`, `manifest.json`, and `styles.css`.
@@ -255,4 +255,4 @@ obMenu is inspired by cMenu, an earlier Obsidian formatting toolbar plugin. This
 
 ## License
 
-MIT License. Copyright (c) 2026 Michael Makarov.
+MIT. See [LICENSE](LICENSE).

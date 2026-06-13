@@ -209,4 +209,4 @@ obMenu ist von cMenu inspiriert, einem frueheren Formatierungsleisten-Plugin fue
 
 ## Lizenz
 
-MIT License. Copyright (c) 2026 Michael Makarov.
+MIT. See [LICENSE](LICENSE).

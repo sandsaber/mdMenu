@@ -209,4 +209,4 @@ obMenu está inspirado en cMenu, un plugin anterior de barra de formato para Obs
 
 ## Licencia
 
-MIT License. Copyright (c) 2026 Michael Makarov.
+MIT. See [LICENSE](LICENSE).

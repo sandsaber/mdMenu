@@ -209,4 +209,4 @@ obMenu は、以前の Obsidian 書式ツールバープラグインである cM
 
 ## License
 
-MIT License. Copyright (c) 2026 Michael Makarov.
+MIT. See [LICENSE](LICENSE).
