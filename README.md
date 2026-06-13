@@ -115,6 +115,22 @@ The settings tab lets you:
 - Remove toolbar buttons.
 - Reset toolbar items to the default set.
 
+## Install from Community plugins
+
+Install mdMenu from the official Obsidian Community Plugins directory:
+
+[mdMenu on Obsidian Community Plugins](https://community.obsidian.md/plugins/mdmenu)
+
+Then enable `mdMenu` from Obsidian's community plugin settings.
+
+## Install with BRAT
+
+BRAT can install mdMenu directly from GitHub releases:
+
+1. Install the "Obsidian42 - BRAT" plugin.
+2. In BRAT, add a beta plugin from `sandsaber/mdMenu`.
+3. Enable `mdMenu` from Obsidian's community plugin settings.
+
 ## Install from GitHub release
 
 Download these files from the latest GitHub release:

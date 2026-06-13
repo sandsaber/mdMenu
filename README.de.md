@@ -115,6 +115,22 @@ Die Einstellungsseite erlaubt:
 - Buttons entfernen.
 - Elemente der Leiste auf das Standardset zuruecksetzen.
 
+## Installation aus Community plugins
+
+Installiere mdMenu aus dem offiziellen Obsidian Community Plugins-Verzeichnis:
+
+[mdMenu in Obsidian Community Plugins](https://community.obsidian.md/plugins/mdmenu)
+
+Aktiviere danach `mdMenu` in den Einstellungen fuer community plugins.
+
+## Installation mit BRAT
+
+BRAT kann mdMenu direkt aus GitHub releases installieren:
+
+1. Installiere das Plugin "Obsidian42 - BRAT".
+2. Fuege in BRAT ein beta plugin aus `sandsaber/mdMenu` hinzu.
+3. Aktiviere `mdMenu` in den Einstellungen fuer community plugins.
+
 ## Installation aus GitHub release
 
 Lade diese Dateien aus dem neuesten GitHub release herunter:

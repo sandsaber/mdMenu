@@ -115,6 +115,22 @@ Presets 是快速起点：
 - 移除工具栏按钮。
 - 将工具栏项目重置为默认集合。
 
+## 从 Community plugins 安装
+
+从官方 Obsidian Community Plugins 目录安装 mdMenu：
+
+[Obsidian Community Plugins 中的 mdMenu](https://community.obsidian.md/plugins/mdmenu)
+
+然后在 community plugin 设置中启用 `mdMenu`。
+
+## 使用 BRAT 安装
+
+BRAT 可以直接从 GitHub releases 安装 mdMenu：
+
+1. 安装 "Obsidian42 - BRAT" 插件。
+2. 在 BRAT 中从 `sandsaber/mdMenu` 添加 beta plugin。
+3. 在 community plugin 设置中启用 `mdMenu`。
+
 ## 从 GitHub release 安装
 
 从最新 GitHub release 下载这些文件：

@@ -115,6 +115,22 @@ La pestaña de ajustes permite:
 - Quitar botones.
 - Restaurar los elementos de la barra al conjunto predeterminado.
 
+## Instalar desde Community plugins
+
+Instala mdMenu desde el directorio oficial de Obsidian Community Plugins:
+
+[mdMenu en Obsidian Community Plugins](https://community.obsidian.md/plugins/mdmenu)
+
+Después activa `mdMenu` desde los ajustes de community plugins.
+
+## Instalar con BRAT
+
+BRAT puede instalar mdMenu directamente desde GitHub releases:
+
+1. Instala el plugin "Obsidian42 - BRAT".
+2. En BRAT, añade un beta plugin desde `sandsaber/mdMenu`.
+3. Activa `mdMenu` desde los ajustes de community plugins.
+
 ## Instalar desde GitHub release
 
 Descarga estos archivos del último GitHub release:

@@ -115,6 +115,22 @@ mdMenu поддерживает четыре режима размещения:
 - Удалить кнопки.
 - Сбросить элементы панели к набору по умолчанию.
 
+## Установка из Community plugins
+
+Установите mdMenu из официального каталога Obsidian Community Plugins:
+
+[mdMenu в Obsidian Community Plugins](https://community.obsidian.md/plugins/mdmenu)
+
+Затем включите `mdMenu` в настройках community plugins.
+
+## Установка через BRAT
+
+BRAT может установить mdMenu напрямую из GitHub releases:
+
+1. Установите плагин "Obsidian42 - BRAT".
+2. В BRAT добавьте beta plugin из `sandsaber/mdMenu`.
+3. Включите `mdMenu` в настройках community plugins.
+
 ## Установка из GitHub release
 
 Скачайте эти файлы из последнего GitHub release:
