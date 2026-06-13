@@ -1,6 +1,6 @@
 {
   "name": "mdmenu",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A mini WYSIWYG-style Markdown formatting toolbar for Obsidian.",
   "main": "main.js",
   "type": "module",
