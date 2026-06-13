@@ -177,7 +177,7 @@ git tag 0.1.0
 git push origin 0.1.0
 ```
 
-The release workflow runs on tags matching `x.y.z`. It installs dependencies with `npm ci`, runs `npm audit --omit=dev`, typechecks, runs tests, builds `dist/obmenu`, checks that the tag matches `package.json` and `manifest.json`, verifies release assets, creates GitHub artifact attestations, and publishes `main.js`, `manifest.json`, and `styles.css`.
+The release workflow runs on tags matching `x.y.z`. It installs dependencies with `npm ci`, runs `npm audit --omit=dev`, lints, typechecks, runs tests, builds `dist/obmenu`, checks that the tag matches `package.json` and `manifest.json`, verifies release assets, creates GitHub artifact attestations, and publishes `main.js`, `manifest.json`, and `styles.css`.
 
 ## Development
 
@@ -191,6 +191,12 @@ Run tests:
 
 ```bash
 npm run test
+```
+
+Run lint checks:
+
+```bash
+npm run lint
 ```
 
 Run TypeScript checks:
@@ -217,7 +223,7 @@ Run the full pre-release check:
 npm run check
 ```
 
-`npm run check` runs tests, the production build, the release folder build, and `npm audit --omit=dev`.
+`npm run check` runs lint checks, tests, the production build, the release folder build, and `npm audit --omit=dev`.
 
 ## Test coverage
 

@@ -169,6 +169,12 @@ npm install
 npm run test
 ```
 
+lint チェックを実行：
+
+```bash
+npm run lint
+```
+
 TypeScript チェックを実行：
 
 ```bash

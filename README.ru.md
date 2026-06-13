@@ -169,6 +169,12 @@ npm install
 npm run test
 ```
 
+Запустить lint-проверки:
+
+```bash
+npm run lint
+```
+
 Запустить TypeScript-проверку:
 
 ```bash

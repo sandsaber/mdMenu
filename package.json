@@ -1,16 +1,17 @@
 {
   "name": "obmenu",
   "version": "0.1.0",
-  "description": "A modern Markdown formatting toolbar for Obsidian.",
+  "description": "A mini WYSIWYG-style Markdown formatting toolbar for Obsidian.",
   "main": "main.js",
   "type": "module",
   "scripts": {
     "dev": "node esbuild.config.mjs",
+    "lint": "eslint src tests vitest.config.ts",
     "typecheck": "tsc -noEmit -skipLibCheck",
     "build": "npm run typecheck && node esbuild.config.mjs production",
     "build:dist": "npm run typecheck && node scripts/build-dist.mjs",
     "audit": "npm audit --omit=dev",
-    "check": "npm run test && npm run build && npm run build:dist && npm run audit",
+    "check": "npm run lint && npm run test && npm run build && npm run build:dist && npm run audit",
     "test": "vitest run",
     "test:watch": "vitest"
   },
@@ -30,9 +31,11 @@
     "@types/node": "^25.9.3",
     "builtin-modules": "^5.2.0",
     "esbuild": "^0.28.1",
+    "eslint": "^10.5.0",
     "obsidian": "^1.13.1",
     "tslib": "^2.8.1",
     "typescript": "^6.0.3",
+    "typescript-eslint": "^8.61.0",
     "vitest": "^4.1.8"
   }
 }

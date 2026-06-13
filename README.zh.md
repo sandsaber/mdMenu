@@ -169,6 +169,12 @@ npm install
 npm run test
 ```
 
+运行 lint 检查：
+
+```bash
+npm run lint
+```
+
 运行 TypeScript 检查：
 
 ```bash

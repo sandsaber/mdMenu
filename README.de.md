@@ -169,6 +169,12 @@ Tests ausfuehren:
 npm run test
 ```
 
+Lint-Pruefungen ausfuehren:
+
+```bash
+npm run lint
+```
+
 TypeScript pruefen:
 
 ```bash

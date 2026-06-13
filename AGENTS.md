@@ -22,6 +22,12 @@ Run unit tests:
 npm run test
 ```
 
+Run lint checks:
+
+```bash
+npm run lint
+```
+
 Run TypeScript checks:
 
 ```bash

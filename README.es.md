@@ -169,6 +169,12 @@ Ejecutar pruebas:
 npm run test
 ```
 
+Ejecutar comprobaciones de lint:
+
+```bash
+npm run lint
+```
+
 Ejecutar comprobaciones de TypeScript:
 
 ```bash
