@@ -4,7 +4,7 @@ This file is the canonical project guide for coding agents working on obMenu.
 
 ## Project
 
-obMenu is a clean-room Obsidian plugin that provides a compact Markdown formatting toolbar.
+obMenu is a clean-room Obsidian plugin that provides a compact, mini WYSIWYG-style Markdown formatting toolbar while keeping notes as plain Markdown.
 
 The implementation is inspired by cMenu as a product idea, but it must not copy cMenu source files.
 
