@@ -28,12 +28,12 @@ export class ToolbarController {
 
   constructor(private readonly options: ToolbarControllerOptions) {}
 
-  mount(parent: HTMLElement): void {
-    if (this.root) return;
+  mount(parent: HTMLElement): boolean {
+    if (this.root?.parentElement === parent) return false;
 
-    this.root = createDiv({ cls: "mdmenu-toolbar" });
-    parent.appendChild(this.root);
-    this.render();
+    this.unmount();
+    this.root = parent.createDiv({ cls: "mdmenu-toolbar" });
+    return true;
   }
 
   unmount(): void {
@@ -151,6 +151,8 @@ export class ToolbarController {
     this.dragCleanup?.();
 
     const root = this.root;
+    const rootDocument = root.doc;
+    const rootWindow = root.win;
     const startRect = root.getBoundingClientRect();
     const startPointer = { left: event.clientX, top: event.clientY };
     let latestPosition: ToolbarPosition = {
@@ -170,7 +172,7 @@ export class ToolbarController {
           top: startRect.top + moveEvent.clientY - startPointer.top,
         },
         toolbarSize,
-        { width: activeWindow.innerWidth, height: activeWindow.innerHeight },
+        { width: rootWindow.innerWidth, height: rootWindow.innerHeight },
       );
 
       this.setPosition(latestPosition.left, latestPosition.top);
@@ -183,14 +185,14 @@ export class ToolbarController {
       this.options.onManualMove(latestPosition);
     };
 
-    activeDocument.addEventListener("pointermove", onPointerMove);
-    activeDocument.addEventListener("pointerup", stopDrag, { once: true });
-    activeDocument.addEventListener("pointercancel", stopDrag, { once: true });
+    rootDocument.addEventListener("pointermove", onPointerMove);
+    rootDocument.addEventListener("pointerup", stopDrag, { once: true });
+    rootDocument.addEventListener("pointercancel", stopDrag, { once: true });
 
     this.dragCleanup = () => {
-      activeDocument.removeEventListener("pointermove", onPointerMove);
-      activeDocument.removeEventListener("pointerup", stopDrag);
-      activeDocument.removeEventListener("pointercancel", stopDrag);
+      rootDocument.removeEventListener("pointermove", onPointerMove);
+      rootDocument.removeEventListener("pointerup", stopDrag);
+      rootDocument.removeEventListener("pointercancel", stopDrag);
     };
   }
 }

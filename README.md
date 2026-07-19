@@ -57,6 +57,7 @@ Selection, cursor, and manual placement stay inside the viewport, even in small 
 The toolbar is editable from settings:
 
 - Add any built-in command that isn't already on the toolbar.
+- Search for and add any available command from Obsidian's command palette.
 - Remove buttons you don't use.
 - Add visual separators between groups.
 - Reorder buttons with drag and drop.
@@ -91,6 +92,8 @@ Both styles use Obsidian theme variables, so mdMenu follows light and dark theme
 - Checkbox toggling preserves indentation and handles empty checked or unchecked task items.
 - Callout toggling turns the current line into `> [!note]`, or removes an existing callout marker.
 - Clear formatting removes common inline wrappers from the selection or current line.
+- Heading, checkbox, and callout actions apply to every selected line.
+- Code block toggling wraps or unwraps fenced code blocks.
 
 ### Settings safety
 
@@ -110,6 +113,7 @@ The settings tab lets you:
 - Reset the manual toolbar position.
 - Apply toolbar presets: Writer, Zettelkasten, Code notes, and Compact.
 - Add built-in toolbar buttons.
+- Add commands from Obsidian's command palette.
 - Add visual separators.
 - Reorder toolbar buttons with drag and drop or arrow buttons.
 - Remove toolbar buttons.
@@ -252,14 +256,16 @@ The current tests cover:
 - Callout and clear-formatting transforms.
 - Toolbar command registry.
 - Contextual toolbar positioning.
+- Event coalescing and active-document switching.
+- Multiline Markdown transforms and fenced code blocks.
 
 ## Roadmap
 
 Next up:
 
-- UI for adding and removing custom Obsidian commands.
 - Better cursor geometry when Obsidian exposes a stable editor-coordinate API.
-- Manual smoke-test notes for common Obsidian themes and vault layouts.
+- Keyboard navigation and touch-target refinements.
+- Automated UI smoke tests for common themes, mobile layouts, and pop-out windows.
 
 ## Privacy
 

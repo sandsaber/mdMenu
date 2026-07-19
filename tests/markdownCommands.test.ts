@@ -2,10 +2,16 @@ import { describe, expect, it } from "vitest";
 import type { Editor } from "obsidian";
 import {
   applyCalloutToLine,
-  clearInlineFormatting,
+  applyCodeBlockCommand,
+  applyHeadingCommand,
   applyInlineCommand,
   applyHeadingToLine,
+  applyHeadingToText,
+  clearInlineFormatting,
+  toggleCalloutBlock,
   toggleCheckboxLine,
+  toggleCheckboxText,
+  toggleFencedCodeBlock,
   toggleInlineWrapper,
 } from "../src/commands/markdownCommands";
 
@@ -57,6 +63,12 @@ describe("applyHeadingToLine", () => {
   });
 });
 
+describe("applyHeadingToText", () => {
+  it("applies a heading to every selected line", () => {
+    expect(applyHeadingToText("One\n### Two", 2)).toBe("## One\n## Two");
+  });
+});
+
 describe("toggleCheckboxLine", () => {
   it("adds an unchecked checkbox after indentation", () => {
     expect(toggleCheckboxLine("  task")).toBe("  - [ ] task");
@@ -79,6 +91,12 @@ describe("toggleCheckboxLine", () => {
   });
 });
 
+describe("toggleCheckboxText", () => {
+  it("toggles every selected line independently", () => {
+    expect(toggleCheckboxText("one\n- [x] two")).toBe("- [ ] one\ntwo");
+  });
+});
+
 describe("applyCalloutToLine", () => {
   it("wraps a plain line in a note callout", () => {
     expect(applyCalloutToLine("Remember this")).toBe("> [!note] Remember this");
@@ -90,6 +108,29 @@ describe("applyCalloutToLine", () => {
 
   it("keeps empty callouts tidy", () => {
     expect(applyCalloutToLine("")).toBe("> [!note]");
+  });
+});
+
+describe("toggleCalloutBlock", () => {
+  it("wraps a multiline selection as one callout", () => {
+    expect(toggleCalloutBlock("First\nSecond\n")).toBe(
+      "> [!note] First\n> Second\n>",
+    );
+  });
+
+  it("unwraps a multiline callout", () => {
+    expect(toggleCalloutBlock("> [!tip] First\n> Second\n>")).toBe(
+      "First\nSecond\n",
+    );
+  });
+});
+
+describe("toggleFencedCodeBlock", () => {
+  it("wraps and unwraps fenced code", () => {
+    const fenced = "```\nconst value = 1;\n```";
+
+    expect(toggleFencedCodeBlock("const value = 1;")).toBe(fenced);
+    expect(toggleFencedCodeBlock(fenced)).toBe("const value = 1;");
   });
 });
 
@@ -122,6 +163,51 @@ describe("applyInlineCommand", () => {
     expect(calls).toEqual([
       ["replaceSelection", "****"],
       ["setCursor", 3, 10],
+    ]);
+  });
+});
+
+describe("multiline editor commands", () => {
+  it("expands a partial selection to full lines for headings", () => {
+    const calls: unknown[] = [];
+    const lines = ["One", "Two", "Three"];
+    const editor = {
+      getSelection: () => "ne\nTw",
+      getCursor: (side?: "from" | "to") =>
+        side === "to" ? { line: 1, ch: 2 } : { line: 0, ch: 1 },
+      getLine: (line: number) => lines[line],
+      replaceRange: (...args: unknown[]) => calls.push(["replaceRange", ...args]),
+      setSelection: (...args: unknown[]) => calls.push(["setSelection", ...args]),
+    };
+
+    applyHeadingCommand(editor as unknown as Editor, 1);
+
+    expect(calls).toEqual([
+      [
+        "replaceRange",
+        "# One\n# Two",
+        { line: 0, ch: 0 },
+        { line: 1, ch: 3 },
+      ],
+      ["setSelection", { line: 0, ch: 0 }, { line: 1, ch: 5 }],
+    ]);
+  });
+
+  it("places the cursor inside an empty fenced code block", () => {
+    const calls: unknown[] = [];
+    const editor = {
+      getSelection: () => "",
+      getCursor: () => ({ line: 2, ch: 0 }),
+      getLine: () => "",
+      replaceSelection: (text: string) => calls.push(["replaceSelection", text]),
+      setCursor: (line: number, ch: number) => calls.push(["setCursor", line, ch]),
+    };
+
+    applyCodeBlockCommand(editor as unknown as Editor);
+
+    expect(calls).toEqual([
+      ["replaceSelection", "```\n\n```"],
+      ["setCursor", 3, 0],
     ]);
   });
 });

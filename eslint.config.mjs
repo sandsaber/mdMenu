@@ -1,11 +1,25 @@
-import tseslint from "typescript-eslint";
+import { defineConfig, globalIgnores } from "eslint/config";
+import obsidianmd from "eslint-plugin-obsidianmd";
+import globals from "globals";
 
-export default tseslint.config(
+export default defineConfig(
+  globalIgnores(["node_modules", "dist", "main.js"]),
   {
-    ignores: ["dist/**", "main.js"],
+    languageOptions: {
+      globals: {
+        ...globals.browser,
+      },
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
   },
-  ...tseslint.configs.recommended,
+  ...obsidianmd.configs.recommended,
   {
-    files: ["src/**/*.ts", "tests/**/*.ts", "vitest.config.ts"],
+    files: ["tests/**/*.ts"],
+    rules: {
+      "obsidianmd/no-nodejs-modules": "off",
+    },
   },
 );

@@ -1,4 +1,4 @@
-import type { Editor } from "obsidian";
+import type { Editor, EditorPosition } from "obsidian";
 
 export interface InlineTransformResult {
   text: string;
@@ -32,6 +32,16 @@ export function applyHeadingToLine(
   return `${"#".repeat(level)} ${text}`;
 }
 
+export function applyHeadingToText(
+  text: string,
+  level: 1 | 2 | 3 | 4 | 5 | 6,
+): string {
+  return text
+    .split("\n")
+    .map((line) => applyHeadingToLine(line, level))
+    .join("\n");
+}
+
 export function toggleCheckboxLine(line: string): string {
   const checkboxMatch = line.match(/^(\s*)-\s+\[[ xX]\](?:\s+(.*))?$/);
 
@@ -45,6 +55,10 @@ export function toggleCheckboxLine(line: string): string {
   return `${indentation}- [ ] ${text}`;
 }
 
+export function toggleCheckboxText(text: string): string {
+  return text.split("\n").map(toggleCheckboxLine).join("\n");
+}
+
 export function applyCalloutToLine(line: string): string {
   const calloutMatch = line.match(/^>\s+\[![^\]]+\](?:\s+(.*))?$/i);
 
@@ -53,6 +67,38 @@ export function applyCalloutToLine(line: string): string {
   }
 
   return line.length > 0 ? `> [!note] ${line}` : "> [!note]";
+}
+
+export function toggleCalloutBlock(text: string): string {
+  const lines = text.split("\n");
+  const calloutMatch = lines[0]?.match(/^>\s+\[![^\]]+\](?:\s+(.*))?$/i);
+  const isCalloutBlock =
+    Boolean(calloutMatch) &&
+    lines.slice(1).every((line) => /^>(?:\s|$)/.test(line));
+
+  if (calloutMatch && isCalloutBlock) {
+    return [
+      calloutMatch[1] ?? "",
+      ...lines.slice(1).map((line) => line.replace(/^>\s?/, "")),
+    ].join("\n");
+  }
+
+  return lines
+    .map((line, index) => {
+      if (index === 0) {
+        return line.length > 0 ? `> [!note] ${line}` : "> [!note]";
+      }
+
+      return line.length > 0 ? `> ${line}` : ">";
+    })
+    .join("\n");
+}
+
+export function toggleFencedCodeBlock(text: string): string {
+  const fencedBlock = text.match(/^```[^\n]*\n([\s\S]*?)\n```$/);
+  if (fencedBlock) return fencedBlock[1] ?? "";
+
+  return `\`\`\`\n${text}\n\`\`\``;
 }
 
 export function clearInlineFormatting(text: string): string {
@@ -83,10 +129,56 @@ export function applyInlineCommand(
   }
 }
 
+function getSelectedLineRange(editor: Editor): {
+  from: EditorPosition;
+  to: EditorPosition;
+} | null {
+  if (editor.getSelection().length === 0) return null;
+
+  const from = editor.getCursor("from");
+  const selectionTo = editor.getCursor("to");
+  const endLine =
+    selectionTo.line > from.line && selectionTo.ch === 0
+      ? selectionTo.line - 1
+      : selectionTo.line;
+
+  return {
+    from: { line: from.line, ch: 0 },
+    to: { line: endLine, ch: editor.getLine(endLine).length },
+  };
+}
+
+function applyLineBlockCommand(
+  editor: Editor,
+  transform: (text: string) => string,
+): boolean {
+  const range = getSelectedLineRange(editor);
+  if (!range) return false;
+
+  const lines: string[] = [];
+  for (let line = range.from.line; line <= range.to.line; line += 1) {
+    lines.push(editor.getLine(line));
+  }
+
+  const transformed = transform(lines.join("\n"));
+  editor.replaceRange(transformed, range.from, range.to);
+
+  const transformedLines = transformed.split("\n");
+  editor.setSelection(range.from, {
+    line: range.from.line + transformedLines.length - 1,
+    ch: transformedLines[transformedLines.length - 1]?.length ?? 0,
+  });
+  return true;
+}
+
 export function applyHeadingCommand(
   editor: Editor,
   level: 1 | 2 | 3 | 4 | 5 | 6,
 ): void {
+  if (applyLineBlockCommand(editor, (text) => applyHeadingToText(text, level))) {
+    return;
+  }
+
   const cursor = editor.getCursor();
   const line = editor.getLine(cursor.line);
 
@@ -94,6 +186,8 @@ export function applyHeadingCommand(
 }
 
 export function applyCheckboxCommand(editor: Editor): void {
+  if (applyLineBlockCommand(editor, toggleCheckboxText)) return;
+
   const cursor = editor.getCursor();
   const line = editor.getLine(cursor.line);
 
@@ -101,10 +195,26 @@ export function applyCheckboxCommand(editor: Editor): void {
 }
 
 export function applyCalloutCommand(editor: Editor): void {
+  if (applyLineBlockCommand(editor, toggleCalloutBlock)) return;
+
   const cursor = editor.getCursor();
   const line = editor.getLine(cursor.line);
 
   editor.setLine(cursor.line, applyCalloutToLine(line));
+}
+
+export function applyCodeBlockCommand(editor: Editor): void {
+  const selection = editor.getSelection();
+  if (selection.length > 0) {
+    editor.replaceSelection(toggleFencedCodeBlock(selection));
+    return;
+  }
+
+  const cursor = editor.getCursor();
+  const currentLine = editor.getLine(cursor.line);
+  const isEmptyLine = currentLine.length === 0;
+  editor.replaceSelection(isEmptyLine ? "```\n\n```" : "\n```\n\n```\n");
+  editor.setCursor(cursor.line + (isEmptyLine ? 1 : 2), 0);
 }
 
 export function applyClearFormattingCommand(editor: Editor): void {

@@ -36,6 +36,12 @@ describe("normalizeSettings", () => {
     expect(settings.toolbarItems).toEqual(toolbarItems);
   });
 
+  it("keeps an intentionally empty toolbar", () => {
+    const settings = normalizeSettings({ toolbarItems: [] });
+
+    expect(settings.toolbarItems).toEqual([]);
+  });
+
   it("repairs invalid modes, style, and stale item shapes", () => {
     const settings = normalizeSettings({
       enabled: true,

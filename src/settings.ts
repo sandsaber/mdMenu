@@ -148,9 +148,10 @@ export function normalizeSettings(saved: unknown): MdMenuSettings {
   }
 
   const input = saved as Partial<MdMenuSettings>;
-  const toolbarItems = Array.isArray(input.toolbarItems)
-    ? input.toolbarItems.filter(isToolbarItem)
-    : [];
+  const savedToolbarItems = Array.isArray(input.toolbarItems)
+    ? input.toolbarItems
+    : null;
+  const toolbarItems = savedToolbarItems?.filter(isToolbarItem) ?? [];
 
   return {
     enabled:
@@ -165,8 +166,10 @@ export function normalizeSettings(saved: unknown): MdMenuSettings {
       ? { left: input.manualPosition.left, top: input.manualPosition.top }
       : DEFAULT_SETTINGS.manualPosition,
     toolbarItems:
-      toolbarItems.length > 0
-        ? toolbarItems
-        : structuredClone(DEFAULT_TOOLBAR_ITEMS),
+      savedToolbarItems?.length === 0
+        ? []
+        : toolbarItems.length > 0
+          ? toolbarItems
+          : structuredClone(DEFAULT_TOOLBAR_ITEMS),
   };
 }

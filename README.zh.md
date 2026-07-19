@@ -57,6 +57,7 @@ selection、cursor 和 manual 模式都会把工具栏限制在 viewport 内，�
 你可以在设置里编辑工具栏：
 
 - 添加尚未出现在工具栏上的任意内置命令。
+- 从 Obsidian 命令面板中搜索并添加任意可用命令。
 - 移除不用的按钮。
 - 在分组之间添加视觉分隔符。
 - 用 drag and drop 重新排序按钮。
@@ -91,6 +92,8 @@ Presets 是快速起点：
 - 复选框切换会保留缩进，并处理空的 checked 或 unchecked task items。
 - Callout 会把当前行变成 `> [!note]`，或移除已有的 callout marker。
 - 清除格式会从选区或当前行移除常见的行内包裹标记。
+- 标题、复选框和 callout 操作会应用到所有选中的行。
+- 代码块操作可以添加或移除 fenced code block。
 
 ### 设置安全
 
@@ -110,6 +113,7 @@ Presets 是快速起点：
 - 重置手动工具栏位置。
 - 应用 Writer、Zettelkasten、Code notes 和 Compact presets。
 - 添加内置工具栏按钮。
+- 从 Obsidian 命令面板添加命令。
 - 添加视觉分隔符。
 - 用 drag and drop 或箭头按钮重新排序。
 - 移除工具栏按钮。

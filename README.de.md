@@ -57,6 +57,7 @@ Selection, cursor und manual bleiben innerhalb des Viewports, auch in kleinen Fe
 Die Leiste kann in den Einstellungen bearbeitet werden:
 
 - Eingebaute Befehle hinzufuegen, die noch nicht in der Leiste sind.
+- Verfuegbare Befehle aus der Obsidian-Befehlspalette suchen und hinzufuegen.
 - Nicht benoetigte Buttons entfernen.
 - Visuelle Trenner zwischen Gruppen einfuegen.
 - Buttons per drag and drop neu sortieren.
@@ -91,6 +92,8 @@ Beide Stile verwenden Obsidian theme variables. Dadurch folgt mdMenu hellen und 
 - Checkbox-Umschaltung behaelt Einrueckung bei und behandelt leere aktivierte oder deaktivierte task items.
 - Callout wandelt die aktuelle Zeile in `> [!note]` um oder entfernt einen vorhandenen callout marker.
 - Formatierung entfernen loescht haeufige Inline-Umfassungen aus Auswahl oder aktueller Zeile.
+- Ueberschriften, Checkboxen und Callouts werden auf alle ausgewaehlten Zeilen angewendet.
+- Die Codeblock-Umschaltung fuegt fenced code blocks hinzu oder entfernt sie.
 
 ### Sichere Einstellungen
 
@@ -110,6 +113,7 @@ Die Einstellungsseite erlaubt:
 - Die manuelle Position zuruecksetzen.
 - Presets anwenden: Writer, Zettelkasten, Code notes und Compact.
 - Eingebaute Buttons hinzufuegen.
+- Befehle aus der Obsidian-Befehlspalette hinzufuegen.
 - Visuelle Trenner hinzufuegen.
 - Buttons per drag and drop oder Pfeiltasten sortieren.
 - Buttons entfernen.

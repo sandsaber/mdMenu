@@ -9,6 +9,7 @@ import {
   applyCalloutCommand,
   applyCheckboxCommand,
   applyClearFormattingCommand,
+  applyCodeBlockCommand,
   applyHeadingCommand,
   applyInlineCommand,
 } from "./commands/markdownCommands";
@@ -20,8 +21,10 @@ import { clampPosition, positionNearRect } from "./toolbar/positioning";
 import { ToolbarController } from "./toolbar/toolbar";
 
 interface ObsidianCommandApi {
+  commands?: Record<string, Command>;
   executeCommandById(commandId: string): boolean;
   findCommand(commandId: string): Command | undefined;
+  listCommands?(): Command[];
 }
 
 type AppWithCommandApi = typeof Plugin.prototype.app & {
@@ -61,10 +64,13 @@ export default class MdMenuPlugin extends Plugin {
           void this.saveSettings();
         },
       });
-      this.toolbar.mount(activeDocument.body);
 
-      this.events = new ToolbarEvents(this.app.workspace, () =>
-        this.refreshToolbar(),
+      this.events = new ToolbarEvents(
+        this.app.workspace,
+        () =>
+          this.app.workspace.getActiveViewOfType(MarkdownView)?.containerEl
+            .doc ?? null,
+        () => this.updateToolbarContext(),
       );
       this.events.register();
       this.refreshToolbar();
@@ -84,14 +90,37 @@ export default class MdMenuPlugin extends Plugin {
   }
 
   refreshToolbar(): void {
+    this.updateToolbarContext(true);
+  }
+
+  getObsidianCommands(): Command[] {
+    const commandApi = this.commandApi;
+    if (!commandApi) return [];
+
+    const commands =
+      commandApi.listCommands?.() ?? Object.values(commandApi.commands ?? {});
+
+    return commands
+      .filter((command) => command.id.length > 0 && command.name.length > 0)
+      .sort((left, right) => left.name.localeCompare(right.name));
+  }
+
+  private updateToolbarContext(render = false): void {
     const view = this.app.workspace.getActiveViewOfType(MarkdownView);
     const visible = this.settings.enabled && Boolean(view);
 
-    this.toolbar?.render();
-    this.toolbar?.setVisible(visible);
+    if (!this.toolbar) return;
+
+    const remounted = view
+      ? this.toolbar.mount(view.containerEl.doc.body)
+      : false;
+    if (render || remounted) {
+      this.toolbar.render();
+    }
+    this.toolbar.setVisible(visible);
 
     if (visible && view) {
-      this.updateToolbarPosition(view.editor);
+      this.updateToolbarPosition(view);
     }
   }
 
@@ -135,6 +164,11 @@ export default class MdMenuPlugin extends Plugin {
       editorCallback: (editor) => applyInlineCommand(editor, "`"),
     });
     this.addCommand({
+      id: "toggle-code-block",
+      name: "Toggle code block",
+      editorCallback: (editor) => applyCodeBlockCommand(editor),
+    });
+    this.addCommand({
       id: "toggle-checkbox",
       name: "Toggle checkbox",
       editorCallback: (editor) => applyCheckboxCommand(editor),
@@ -162,7 +196,7 @@ export default class MdMenuPlugin extends Plugin {
     if (item.type === "obsidian") {
       this.commandApi?.executeCommandById(item.commandId);
       editor.focus();
-      this.refreshToolbar();
+      this.updateToolbarContext();
       return;
     }
 
@@ -181,7 +215,7 @@ export default class MdMenuPlugin extends Plugin {
     }
 
     editor.focus();
-    this.refreshToolbar();
+    this.updateToolbarContext();
   }
 
   private runBuiltInItem(commandId: string, editor: Editor): boolean {
@@ -191,7 +225,7 @@ export default class MdMenuPlugin extends Plugin {
       strikethrough: () => applyInlineCommand(editor, "~~"),
       underline: () => applyInlineCommand(editor, "<u>", "</u>"),
       "inline-code": () => applyInlineCommand(editor, "`"),
-      "code-block": () => applyInlineCommand(editor, "\n```\n", "\n```\n"),
+      "code-block": () => applyCodeBlockCommand(editor),
       highlight: () => applyInlineCommand(editor, "=="),
       "clear-formatting": () => applyClearFormattingCommand(editor),
       checkbox: () => applyCheckboxCommand(editor),
@@ -221,7 +255,7 @@ export default class MdMenuPlugin extends Plugin {
         item.onClick(() => {
           applyHeadingCommand(editor, level);
           editor.focus();
-          this.refreshToolbar();
+          this.updateToolbarContext();
         });
       });
     }
@@ -229,8 +263,15 @@ export default class MdMenuPlugin extends Plugin {
     menu.showAtMouseEvent(event);
   }
 
-  private updateToolbarPosition(editor: Editor): void {
+  private updateToolbarPosition(view: MarkdownView): void {
     if (!this.toolbar) return;
+
+    const { editor } = view;
+    const viewWindow = view.containerEl.win;
+    const viewport = {
+      width: viewWindow.innerWidth,
+      height: viewWindow.innerHeight,
+    };
 
     if (this.settings.positionMode === "manual") {
       const toolbarSize = this.toolbar.getSize();
@@ -241,14 +282,11 @@ export default class MdMenuPlugin extends Plugin {
 
       const position = clampPosition(
         this.settings.manualPosition ?? {
-          left: (activeWindow.innerWidth - toolbarSize.width) / 2,
-          top: activeWindow.innerHeight - toolbarSize.height - 16,
+          left: (viewport.width - toolbarSize.width) / 2,
+          top: viewport.height - toolbarSize.height - 16,
         },
         toolbarSize,
-        {
-          width: activeWindow.innerWidth,
-          height: activeWindow.innerHeight,
-        },
+        viewport,
       );
 
       this.toolbar.setPosition(position.left, position.top);
@@ -265,7 +303,7 @@ export default class MdMenuPlugin extends Plugin {
       return;
     }
 
-    const triggerRect = this.getTriggerRect();
+    const triggerRect = this.getTriggerRect(view.containerEl.doc);
     const toolbarSize = this.toolbar.getSize();
 
     if (!triggerRect || !toolbarSize) {
@@ -273,16 +311,13 @@ export default class MdMenuPlugin extends Plugin {
       return;
     }
 
-    const position = positionNearRect(triggerRect, toolbarSize, {
-      width: activeWindow.innerWidth,
-      height: activeWindow.innerHeight,
-    });
+    const position = positionNearRect(triggerRect, toolbarSize, viewport);
 
     this.toolbar.setPosition(position.left, position.top);
   }
 
-  private getTriggerRect(): DOMRect | null {
-    const selection = activeWindow.getSelection();
+  private getTriggerRect(viewDocument: Document): DOMRect | null {
+    const selection = viewDocument.getSelection();
     if (!selection || selection.rangeCount === 0) return null;
 
     const range = selection.getRangeAt(0);

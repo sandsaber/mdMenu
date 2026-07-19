@@ -57,6 +57,7 @@ Los modos selection, cursor y manual se mantienen dentro del viewport, incluso e
 La barra se edita desde los ajustes:
 
 - Añadir cualquier comando integrado que todavía no esté en la barra.
+- Buscar y añadir cualquier comando disponible de la paleta de comandos de Obsidian.
 - Quitar botones que no uses.
 - Añadir separadores visuales entre grupos.
 - Reordenar botones con drag and drop.
@@ -91,6 +92,8 @@ Ambos estilos usan theme variables de Obsidian, así que mdMenu sigue los temas 
 - El cambio de casilla conserva la indentación y maneja task items vacíos marcados o sin marcar.
 - Callout convierte la línea actual en `> [!note]` o elimina un marcador callout existente.
 - Limpiar formato elimina envoltorios inline comunes de la selección o de la línea actual.
+- Las acciones de encabezado, casilla y callout se aplican a todas las líneas seleccionadas.
+- La acción de bloque de código añade o elimina bloques fenced code.
 
 ### Seguridad de ajustes
 
@@ -110,6 +113,7 @@ La pestaña de ajustes permite:
 - Restaurar la posición manual.
 - Aplicar presets: Writer, Zettelkasten, Code notes y Compact.
 - Añadir botones integrados.
+- Añadir comandos desde la paleta de comandos de Obsidian.
 - Añadir separadores visuales.
 - Reordenar botones con drag and drop o flechas.
 - Quitar botones.
